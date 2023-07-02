@@ -1,7 +1,7 @@
-import { GetStaticProps } from 'next';
 import styles from '@/styles/Home.module.css';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import { allNameSpacesArr } from '@/utils/lang';
+import { getStaticPaths, makeStaticProps } from '@/lib/getStatic';
 
 export default function Test() {
   const { t } = useTranslation('common')
@@ -16,9 +16,5 @@ export default function Test() {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const result = await serverSideTranslations(locale as string, ['common']);
-  return {
-    props: { ...result }
-  };
-}
+const getStaticProps = makeStaticProps(['common']);
+export { getStaticPaths, getStaticProps };
